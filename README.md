@@ -85,10 +85,10 @@ JD_Diy/                     # JD_Diy 仓库
 进入容器中执行以下命令即可
 ```shell
 if [ -d "/jd" ]; then root=/jd; else root=/ql; fi
-mkdir $root/repo/backup/$(date +\%Y\%m\%d)
-cp -rf $root/jbot/* $root/repo/backup/$(date +\%Y\%m\%d)
+mkdir $root/repo/backup/$(date +\%m\%d\%H\%M\%S)
+cp -rf $root/jbot/* $root/repo/backup/$(date +\%m\%d\%H\%M\%S)
 rm -rf $root/jbot/*
-wget https://cdn.jsdelivr.net/gh/chiupam/JD_Diy@master/shell/bot.sh -O $root/bot.sh
+wget https://gitee.com/chiupam/JD_Diy/raw/main/shell/bot.sh -O $root/bot.sh
 bash $root/bot.sh
 ```
 ## 开启user监控机器人
@@ -106,64 +106,19 @@ A wait of **** seconds is required.（需要等待 **** 秒。）
 ## 部署方法
 ```shell
 if [ -d "/jd" ]; then root=/jd; else root=/ql; fi
-mkdir $root/repo/backup/$(date +\%Y\%m\%d)
-cp -rf $root/jbot/* $root/repo/backup/$(date +\%Y\%m\%d)
+mkdir $root/repo/backup/$(date +\%m\%d\%H\%M\%S)
+cp -rf $root/jbot/* $root/repo/backup/$(date +\%m\%d\%H\%M\%S)
 rm -rf $root/jbot/*
-wget https://cdn.jsdelivr.net/gh/chiupam/JD_Diy@master/shell/bot_beta.sh -O $root/bot.sh
+wget https://gitee.com/chiupam/JD_Diy/raw/main/shell/bot_beta.sh -O $root/bot.sh
 bash $root/bot.sh
 ```
 # 已知问题
 1. 重装机器人后 `/start` 没有反应
-```shell
-if [ -d "/jd" ]; then root=/jd; else root=/ql; fi
-rm -f $root/bot.session
-rm -f $root/bot.session-journal
-rm -f $root/user.session
-rm -f $root/user.session-journal
-rm -f $root/config/user.session
-rm -f $root/config/user.session-journal
-sed -i 's/user": "True"/user": "False"/' $root/config/botset.json
-if [ -d "/ql" ]; then
-  ps -ef | grep "python3 -m jbot" | grep -v grep | awk '{print $1}' | xargs kill -9 2>/dev/null
-  nohup python3 -m jbot > $root/log/bot/bot.log 2>&1 &
-else
-  cd $root/jbot; pm2 start ecosystem.config.js
-  cd $root; pm2 restart jbot
-fi
-```
 2. `/user` 点击 `开启user` 按钮后连 `/start` 都没有反应
+3. `AttributeError: module 'xxxxxx' has no attribute 'xxxxxx'`
+4. 想用回之前自己最后一次备份好的机器人文件（可能无法使用user监控）
 ```shell
 if [ -d "/jd" ]; then root=/jd; else root=/ql; fi
-rm -f $root/user.session
-rm -f $root/user.session-journal
-rm -f $root/config/user.session
-rm -f $root/config/user.session-journal
-sed -i 's/user": "True"/user": "False"/' $root/config/botset.json
-if [ -d "/ql" ]; then
-  ps -ef | grep "python3 -m jbot" | grep -v grep | awk '{print $1}' | xargs kill -9 2>/dev/null
-  nohup python3 -m jbot > $root/log/bot/bot.log 2>&1 &
-else
-  cd $root/jbot; pm2 start ecosystem.config.js
-  cd $root; pm2 restart jbot
-fi
-```
-3. 想用回之前自己最后一次备份好的机器人文件（可能无法使用user监控）
-```shell
-if [ -d "/jd" ]; then root=/jd; else root=/ql; fi
-if [ -d $root/repo/backup ]; then 
-  echo "无法恢复user的正常监控！请悉知！"
-  cd $root/repo/backup
-  dir=$(ls -t | head -1 | awk '{print $1}')
-  rm -rf $root/jbot/*
-  cp -rf $root/repo/backup/$dir/* $root/jbot
-  if [ -d "/ql" ]; then
-    ps -ef | grep "python3 -m jbot" | grep -v grep | awk '{print $1}' | xargs kill -9 2>/dev/null
-    nohup python3 -m jbot > $root/log/bot/bot.log 2>&1 &
-  else
-    cd $root/jbot; pm2 start ecosystem.config.js
-    cd $root; pm2 restart jbot
-  fi
-else 
-  echo "你没有做备份！无法回滚！"
-fi
+wget https://gitee.com/chiupam/JD_Diy/raw/main/shell/fix.sh -O $root/fix.sh
+bash $root/fix.sh
 ```

@@ -11,7 +11,7 @@ dir_repo=$root/repo
 file_bot=$root/config/bot.json
 file_botset=$root/config/botset.json
 file_diybotset=$root/config/diybotset.json
-url="https://github.com/chiupam/JD_Diy.git"
+url="https://gitee.com/chiupam/JD_Diy.git"
 repo_path=$dir_repo/diybot
 
 git_pull() {
@@ -65,8 +65,12 @@ notify () {
 
 env() {
   echo -e "\n1、安装bot依赖...\n"
-  apk --no-cache add -f zlib-dev gcc jpeg-dev python3-dev musl-dev freetype-dev
-  echo -e "\nbot依赖安装成功...\n"
+  if [ -f $root/bot.session-journal ]; then
+    echo "\n非首次安装，跳过...\n"
+  else
+    apk --no-cache add -f zlib-dev gcc jpeg-dev python3-dev musl-dev freetype-dev
+    echo -e "\nbot依赖安装成功...\n"
+  fi
 }
 
 bot() {
