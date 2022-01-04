@@ -86,3 +86,5 @@ main() {
   *) echo "输入错误！请重新 bash ${root}/fix.sh 启动脚本" ;;
   esac
 }
+
+main
