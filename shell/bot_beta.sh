@@ -65,12 +65,8 @@ notify () {
 
 env() {
   echo -e "\n1、安装bot依赖...\n"
-  if [ -f $root/bot.session-journal ]; then
-    echo "\n非首次安装，跳过...\n"
-  else
-    apk --no-cache add -f zlib-dev gcc jpeg-dev python3-dev musl-dev freetype-dev
-    echo -e "\nbot依赖安装成功...\n"
-  fi
+  apk --no-cache add -f zlib-dev gcc jpeg-dev python3-dev musl-dev freetype-dev
+  echo -e "\nbot依赖安装成功...\n"
 }
 
 bot() {
@@ -125,6 +121,7 @@ start() {
   fi
   if [[ -z $(grep -E "123456789" $root/config/bot.json) ]]; then
     if [ -d "/ql" ]; then
+      sed -i 's/AutoStartBot="true"/AutoStartBot="false"/' /ql/config/config.sh
       ps -ef | grep "python3 -m jbot" | grep -v grep | awk '{print $1}' | xargs kill -9 2>/dev/null
       nohup python3 -m jbot > $root/log/bot/bot.log 2>&1 &
     else
