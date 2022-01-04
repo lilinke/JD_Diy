@@ -1,36 +1,18 @@
 <h1 align="center">
-  
+  🐏
   <br>
   Author: chiupam
 </h1>
 
-## 目录
-- [目录](#目录)
-- [仓库目录说明](#仓库目录说明)
-- [版权](#版权)
-- [声明](#声明)
-- [特别感谢](#特别感谢)
-- [简介](#简介)
-- [已有功能](#已有功能)
-  - [基础功能](#基础功能)
-  - [user功能](#user功能)
-  - [整合人形bot](#整合人形bot)
-- [使用方式](#使用方式)
-  - [部署机器人](#部署机器人)
-  - [开启user监控机器人](#开启user监控机器人)
-- [前瞻计划](#前瞻计划)
-  - [用户要求](#用户要求)
-  - [部署方法](#部署方法)
-- [已知问题](#已知问题)
 # 仓库目录说明
 ```text
-JD_Diy/                     # JD_Diy 仓库
-  |-- backup                    # 移除的旧文件
-  |-- beta                      # 测试版机器人
+./                     # 仓库
+  |-- backup                    # 备份
+  |-- beta                      # 测试版
   |-- config                    # 配置目录
-  |-- jbot                      # 正式版机器人
+  |-- jbot                      # 正式版
   |-- module                    # 实例模块
-  |-- other                     # 不便于分类脚本
+  |-- other                     # 不便于分类
   |-- pys                       # python脚本
   |-- shell                     # shell脚本
   |-- requirements.txt          # 依赖文件
@@ -49,76 +31,6 @@ JD_Diy/                     # JD_Diy 仓库
 # 特别感谢
 - 脚本的写作参考了 [SuMaiKaDe](https://github.com/SuMaiKaDe) 的 [bot](https://github.com/SuMaiKaDe/bot) 仓库
 - 模块的写作参考了 lxk0301 的 jd_scripts 仓库
-## 简介
-随着 v4-bot 启动而启动的机器人，其中大部分功能亦支持青龙用户。
-## 已有功能
-### 基础功能
-- [x] 发送 `/start` 指令查看机器人说明
-- [x] 发送 `/restart` 指令可重启机器人
-- [x] 发送 `/help` 指令可获取快捷命令
-- [x] 发送 `/upbot` 升级机器人
-- [x] 发送 `/checkcookie` 检测过期情况
-- [x] 发送 `/export` 修改环境变量
-- [x] 发送 `/blockcookie` 进行屏蔽操作
-- [x] 发送 `pin=xxx;wskey=xxx;` 快速添加 `wskey`
-- [x] 发送链接直接下载 `.js` `.sh` 的 `raw` 文件
-- [x] 添加以 `.git` 结尾的仓库链接可添加仓库
-- [x] 发送 `变量名="变量值"` 的格式消息可快捷添加环境变量
-### user功能
-- [x] 发送 `/user` 开启或管理user监控
-- [x] 关注店铺有礼自动执行（需自行配置频道ID）
-- [x] 自动替换某些环境变量（需自行配置频道ID）
-- [x] ~~监控龙王庙频道，监控并定时执行红包雨~~
-- [x] ~~监控动物园频道，自动下载开卡脚本并选择执行~~
-- [x] 监控群组聊天记录（仅文字）
-- [ ] 自动参加抽奖机器人发送的抽奖活动
-- [ ] 自动下载频道/某人的特定文件
-### 整合人形bot
-- [x] re
-- [x] id
-- [x] del
-- [x] da
-- [ ] weather
-- [ ] ...
-# 使用方法
-## 部署机器人
-进入容器中执行以下命令即可
-```shell
-if [ -d "/jd" ]; then root=/jd; else root=/ql; fi
-mkdir $root/repo/backup/$(date +\%m\%d\%H\%M\%S)
-cp -rf $root/jbot/* $root/repo/backup/$(date +\%m\%d\%H\%M\%S)
-rm -rf $root/jbot/*
-wget https://gitee.com/chiupam/JD_Diy/raw/main/shell/bot.sh -O $root/bot.sh
-bash $root/bot.sh
-```
-## 开启user监控机器人
-```text
-在部署机器人成功后使用 /user 指令，选择重新登录即可。
-但是不要在短时内登陆过多次数，因为会报以下错误。
-A wait of **** seconds is required.（需要等待 **** 秒。）
-```
-# 前瞻计划
-测试版机器人的部署方法，功能不稳定，不建议尝试。
-## 用户要求
-- 比较热爱折腾
-- 一定的操作基础
-- 甚至可以 Pr 部分功能
-## 部署方法
-```shell
-if [ -d "/jd" ]; then root=/jd; else root=/ql; fi
-mkdir $root/repo/backup/$(date +\%m\%d\%H\%M\%S)
-cp -rf $root/jbot/* $root/repo/backup/$(date +\%m\%d\%H\%M\%S)
-rm -rf $root/jbot/*
-wget https://gitee.com/chiupam/JD_Diy/raw/main/shell/bot_beta.sh -O $root/bot.sh
-bash $root/bot.sh
-```
-# 已知问题
-1. 重装机器人后 `/start` 没有反应
-2. `/user` 点击 `开启user` 按钮后连 `/start` 都没有反应
-3. `AttributeError: module 'xxxxxx' has no attribute 'xxxxxx'`
-4. 想用回之前自己最后一次备份好的机器人文件（可能无法使用user监控）
-```shell
-if [ -d "/jd" ]; then root=/jd; else root=/ql; fi
-wget https://gitee.com/chiupam/JD_Diy/raw/main/shell/fix.sh -O $root/fix.sh
-bash $root/fix.sh
-```
+# 使用手册
+- [Github](https://github.com/chiupam/JD_Diy/wiki/%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C)
+- [Gitee](https://gitee.com/chiupam/JD_Diy/wikis/%E4%BD%BF%E7%94%A8%E6%89%8B%E5%86%8C)
