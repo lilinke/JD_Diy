@@ -122,7 +122,6 @@ start() {
   if [[ -z $(grep -E "123456789" $root/config/bot.json) ]]; then
     if [ -d "/ql" ]; then
       wget https://gitee.com/chiupam/JD_Diy/raw/main/shell/ql.sh -O /ql/shell/bot.sh
-      sed -i 's/AutoStartBot="true"/AutoStartBot="false"/' /ql/config/config.sh
       ps -ef | grep "python3 -m jbot" | grep -v grep | awk '{print $1}' | xargs kill -9 2>/dev/null
       nohup python3 -m jbot > $root/log/bot/bot.log 2>&1 &
     else
