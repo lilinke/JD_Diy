@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-# shellcheck disable=SC2034
 if [ ! -d "/ql" ];then root=/jd; else root=/ql;fi
 
 restart() {
@@ -47,7 +46,6 @@ back() {
   if [ -d $root/repo/backup ]; then
     echo "无法恢复user的正常监控！请悉知！"
     cd $root/repo/backup || exit
-    # shellcheck disable=SC2012
     dir=$(ls -t | head -1 | awk '{print $1}')
     rm -rf $root/jbot/*
     cp -rf "${root}/repo/backup/${dir}/*" $root/jbot
@@ -57,7 +55,6 @@ back() {
       nohup python3 -m jbot > $root/log/bot/bot.log 2>&1 &
     else
       cd $root/jbot || exit; pm2 start ecosystem.config.js
-      # shellcheck disable=SC2164
       cd $root; pm2 restart jbot
     fi
   else
@@ -66,8 +63,6 @@ back() {
 }
 
 main() {
-  url="https://gitee.com/chiupam/JD_Diy/raw/main/shell/fix.sh"
-  wget $url -O $root/fix.sh -q
   echo "请选择您需要进行的操作:"
   echo "  1) 重装机器人后 /start 没有反应"
   echo "  2) /user 点击 开启user 按钮后连 /start 都没有反应"
@@ -76,14 +71,14 @@ main() {
   echo "  5) 退出修复脚本"
   echo ""
   echo -n "请输入编号: "
-  # shellcheck disable=SC2162
   read N
   case $N in
-  1) fix1 ;;
-  2) fix2 ;;
-  3) fix3 ;;
-  4) back ;;
-  *) echo "输入错误！请重新 bash ${root}/fix.sh 启动脚本" ;;
+    1) fix1 ;;
+    2) fix2 ;;
+    3) fix3 ;;
+    4) back ;;
+    5) exit 0 ;;
+    *) echo "输入错误！"; sleep 1s; main;;
   esac
 }
 
