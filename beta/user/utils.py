@@ -11,19 +11,19 @@ import traceback
 from .. import chat_id, jdbot, logger, LOG_DIR
 
 
-async def execute(msg, info, cmd):
+async def execute(msg, info, exectext):
     """
     执行命令
     """
     try:
-        info += f'\n\n==========📣开始执行脚本📣=========\n'
+        info += f'\n\n📣开始执行脚本📣\n\n'
         msg = await msg.edit(info)
         try:
             from ..diy.diy import start
             await start()
-        except ImportError:
+        except:
             pass
-        p = await asyncio.create_subprocess_shell(cmd, shell=True, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE, env=os.environ)
+        p = await asyncio.create_subprocess_shell(exectext, shell=True, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE, env=os.environ)
         res_bytes, res_err = await p.communicate()
         try:
             from ..diy.diy import end
@@ -45,7 +45,7 @@ async def execute(msg, info, cmd):
             if len(info + res + errinfo) <= 4000:
                 await msg.edit(info + res + errinfo)
             elif len(info + res + errinfo) > 4000:
-                tmp_log = f'{LOG_DIR}/bot/{cmd.split("/")[-1].split(".js")[0].split(".py")[0].split(".sh")[0].split(".ts")[0].split(" ")[-1]}-{datetime.datetime.now().strftime("%H-%M-%S.%f")}.log'
+                tmp_log = f'{LOG_DIR}/bot/{exectext.split("/")[-1].split(".js")[0].split(".py")[0].split(".sh")[0].split(".ts")[0].split(" ")[-1]}-{datetime.datetime.now().strftime("%H-%M-%S.%f")}.log'
                 with open(tmp_log, 'w+', encoding='utf-8') as f:
                     f.write(res)
                 await msg.delete()
@@ -59,4 +59,3 @@ async def execute(msg, info, cmd):
         tip = '建议百度/谷歌进行查询'
         await jdbot.send_message(chat_id, f"{title}\n\n{name}\n{function}\n错误原因：{str(e)}\n{details}\n{traceback.format_exc()}\n{tip}")
         logger.error(f"错误--->{str(e)}")
-        
